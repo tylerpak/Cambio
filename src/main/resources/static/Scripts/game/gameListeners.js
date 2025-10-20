@@ -30,6 +30,25 @@ window.addEventListener('keydown', e => {
             rule.showModal();
         }
     }
+    if(hasDrawn) {
+        if(e.shiftKey) {
+            swapPendingBtn.click();
+        }
+        if(e.key === ' ') {
+            buttons.discard.click();
+        }
+    }
+   else {
+       if(e.shiftKey) {
+           stickBtn.click();
+       }
+       if(e.key === ' ') {
+           drawBtn.click();
+       }
+    }
+   if(e.key.toLowerCase() === 'c') {
+       cambioBtn.click();
+   }
 })
 
 
@@ -52,6 +71,8 @@ function sendMessage() {
 }
 
 // ===== Buttons =====
+
+
 buttons.discard.addEventListener("click", () => {
     console.log("Discarded pending draw");
     sendAction(gameId, currentUser.userId, currentUser.username, "DISCARD_PENDING",{});
