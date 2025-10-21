@@ -62,7 +62,7 @@ function logout() {
 
 async function submitIssue(event) {
     event.preventDefault();
-
+    const currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
     console.log("issue func called")
     let page = document.getElementById("page").value;
     let type = document.getElementById("issueType").value;
@@ -71,8 +71,10 @@ async function submitIssue(event) {
     const res = await fetch("/api/create-issue", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ page: page, type: type, issue: issue, username: sessionStorage.currentUser.username })
+        body: JSON.stringify({ page: page, type: type, issue: issue, username: currentUser.username })
     });
+
+    console.log(currentUser.username);
 
     const msg = await res.text();
     alert("Thank you for submitting your feedback!");

@@ -44,6 +44,10 @@ start.classList.remove("bg-green-600", "text-white", "hover:bg-green-700");
 start.classList.add("bg-gray-500", "text-gray-300", "opacity-50", "cursor-not-allowed");
 const swapPendingBtn = document.getElementById("swap-pending-btn");
 const instructions = document.getElementById("instructions");
+const cambioModal = document.getElementById("cambio-alert");
+const cambioClose = document.getElementById("cambio-exit");
+const cambioText = document.getElementById("cambio-text");
+const cambioTitle = document.getElementById("cambio-title")
 
 instructions.style.color = "white";
 swapPendingBtn.hidden = true;

@@ -117,6 +117,10 @@ stickBtn.addEventListener("click", () => {
     stickModeActive = true;
 })
 
+cambioClose.addEventListener("click", () => {
+    cambioModal.close();
+})
+
 // stickBtn.addEventListener("click", () => {
 //     console.log("Stick");
 //     sendAction(gameId, currentUser.userId, currentUser.username,"CALL_STICK", {});
