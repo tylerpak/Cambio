@@ -48,6 +48,7 @@ const cambioModal = document.getElementById("cambio-alert");
 const cambioClose = document.getElementById("cambio-exit");
 const cambioText = document.getElementById("cambio-text");
 const cambioTitle = document.getElementById("cambio-title")
+const issueText = document.getElementById("issueText");
 
 instructions.style.color = "white";
 swapPendingBtn.hidden = true;

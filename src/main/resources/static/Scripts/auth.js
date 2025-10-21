@@ -1,3 +1,7 @@
+const issueModalBtn = document.getElementById("issueModalBtn");
+const issueDialog = document.getElementById("issueDialog");
+const issueModalClose = document.getElementById("issueModalClose");
+
 document.addEventListener("DOMContentLoaded", () => {
     const currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
 
@@ -60,6 +64,8 @@ function logout() {
     window.location.href = "../index.html";
 }
 
+
+
 async function submitIssue(event) {
     event.preventDefault();
     const currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
@@ -79,6 +85,14 @@ async function submitIssue(event) {
     const msg = await res.text();
     alert("Thank you for submitting your feedback!");
 }
+
+issueModalBtn.addEventListener("click", () => {
+    issueDialog.show();
+})
+
+issueModalClose.addEventListener("click", () => {
+    issueDialog.close();
+})
 
 logoutLink.addEventListener('click', logout);
 logoutDrop.addEventListener('click', logout);

@@ -18,8 +18,29 @@ chatInput.addEventListener("blur", () => {
     chatMode = false;
 })
 
+issueText.addEventListener("focus", () => {
+    chatMode = true;
+})
+
+issueDialog.addEventListener("close", () => {
+    document.body.focus();
+})
+
+issueDialog.addEventListener("open", () => {
+    issueText.focus();
+})
+
+issueText.addEventListener("blur", () => {
+    chatMode = false;
+})
+
+
+
 window.addEventListener('keydown', e => {
     if(chatMode) {
+        if(e.key === 'Escape') {
+            document.body.focus();
+        }
         return;
     }
     if (e.key === 'Enter') {
@@ -43,20 +64,18 @@ window.addEventListener('keydown', e => {
         }
     }
     if(hasDrawn) {
-        if(e.shiftKey) {
+        if(e.ctrlKey) {
             swapPendingBtn.click();
         }
         if(e.key === ' ') {
             buttons.discard.click();
         }
     }
-    else {
-        if(e.shiftKey) {
-            stickBtn.click();
-        }
-        if(e.key === ' ') {
-            drawBtn.click();
-        }
+    if (e.shiftKey) {
+        stickBtn.click();
+    }
+    if (e.key === ' ') {
+        drawBtn.click();
     }
     if(e.key.toLowerCase() === 'c') {
         cambioBtn.click();
