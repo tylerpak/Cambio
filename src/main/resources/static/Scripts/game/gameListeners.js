@@ -34,6 +34,13 @@ issueText.addEventListener("blur", () => {
     chatMode = false;
 })
 
+function handleKeyDown(e){
+    if (e.code === "Space" || e.key === " ") {
+        e.preventDefault();
+        e.stopPropagation();
+    }
+}
+
 
 
 window.addEventListener('keydown', e => {
