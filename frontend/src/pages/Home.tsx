@@ -1,6 +1,11 @@
 import {Button} from "@/components/ui/button.tsx";
 import {Link} from "react-router";
-
+import {
+    Card,
+    CardContent,
+    CardHeader,
+    CardTitle,
+} from "@/components/ui/card"
 
 const Home = () => {
     return (
