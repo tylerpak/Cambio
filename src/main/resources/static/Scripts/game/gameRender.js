@@ -134,7 +134,10 @@ function appendAction(msg) {
             bgMusic.pause();
             playSound("cambio");
             cambioMusic.play().catch();
+            showCambioAlert(msg);
+            messageEl.innerText = `${username} called Cambio`;
             break;
+
         case "DRAW_DECK":
             messageEl.innerText = `${username} drew from the deck`;
             break;
@@ -165,6 +168,10 @@ function appendAction(msg) {
             } else {
                 messageEl.innerText = `did not match a card, they received a penalty!`;
             }// needs a condition for a match or a penalty
+            break;
+
+        case "GIVE":
+            messageEl.innerText = `${username} gave a card to ${getPlayerById(msg.payload.destinationUserId).userName}`;
             break;
 
 
@@ -329,7 +336,7 @@ function renderHands(state) {
                 swapModeActive = true;
                 break;
             case 4:
-                instructions.innerText = "Played a Black King, take a peek at any card and make a swap"
+                instructions.innerText = "Played a King, take a peek at any card and make a swap"
                 peekPlusActive = true;
                 break;
         }
@@ -607,6 +614,12 @@ function winner(state) {
             launchConfetti();
         }
     }
+}
+
+function showCambioAlert(action) {
+    cambioModal.showModal();
+    cambioTitle.innerText = "Cambio Called!";
+    cambioText.innerText = `${action.username} has called CAMBIO!`
 }
 
 function launchConfetti() {
