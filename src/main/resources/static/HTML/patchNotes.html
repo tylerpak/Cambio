@@ -73,10 +73,10 @@
         </el-dialog>
     </header>
 
-    <div class="mx-auto grid max-w-2xl gap-x-8 gap-y-16 lg:mx-0 lg:max-w-none lg:grid-cols-1 lg:gap-y-10">
+    <div class="mx-auto grid max-w-2xl gap-x-8 gap-y-16 lg:mx-0 lg:max-w-none lg:grid-cols-1 lg:gap-y-10 h-screen">
 
         <!-- The Deal Section -->
-        <div class="flex flex-col lg:flex-row items-center gap-8 lg:gap-16">
+        <div class="flex flex-col lg:row items-center gap-8 lg:gap-16">
             <div class="lg:w-1/2">
                 <h1 class="mt-2 text-4xl font-semibold tracking-tight text-pretty text-white sm:text-5xl">V 0.1 Notes</h1>
                 <p class="mt-6 text-xl/8 font-semibold text-white">Fixes</p>
@@ -89,9 +89,6 @@
 
             </div>
         </div>
-
-
-
     </div>
     <button command="show-modal" commandfor="issueDialog" class="fixed bottom-4 right-4 rounded-md bg-red-500 px-2.5 py-1.5 text-sm font-semibold text-white inset-ring inset-ring-white/5 hover:bg-white/20">Issues</button>
     <el-dialog>
