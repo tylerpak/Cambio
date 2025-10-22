@@ -74,4 +74,12 @@ public class Player {
     public void setScore(int score) {
         this.score = score;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof Player player) {
+            return this.getId() == player.getId();
+        }
+        return false;
+    }
 }

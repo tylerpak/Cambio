@@ -46,50 +46,61 @@ public class GameWsController {
      */
     @MessageMapping("/game/{gameId}/action")
     public void handleAction(@DestinationVariable Long gameId, GameAction action) {
-        // NOTE: In production, verify the principal (Principal) to ensure action.userId matches the authenticated user
-        // Increment seq atomically in the service
-        int nextSeq = gameService.incrementSeq();
-        action.setSeq(nextSeq);
+        try {
+            // NOTE: In production, verify the principal (Principal) to ensure action.userId matches the authenticated user
+            // Increment seq atomically in the service
+            int nextSeq = gameService.incrementSeq();
+            action.setSeq(nextSeq);
 
-        // Apply the action in the engine and get updated state
-        GameState updatedState = gameService.applyAction(gameId, action);
-        updatedState.setSeq(nextSeq);
+            // Apply the action in the engine and get updated state
+            GameState updatedState = gameService.applyAction(gameId, action);
+            updatedState.setSeq(nextSeq);
 
-        // Special handling for STICK payload
-        if (action.getType() == ActionType.STICK) {
-            Map<String, Object> newPayload = action.getPayload();
-            newPayload.put("didStickWork", updatedState.isDidStickWork());
-            action.setPayload(newPayload);
-        }
-
-        // Broadcast action for animations
-        messaging.convertAndSend("/topic/game." + gameId + ".action", action);
-
-        // Broadcast updated state for rendering
-        messaging.convertAndSend("/topic/game." + gameId + ".state", updatedState);
-
-        //Update DB if game is over
-        if(updatedState.getWinner() != null) {
-            List<GameState.PlayerView> players = updatedState.getPlayers();
-            ArrayList<Long> ids = new ArrayList<Long>();
-            for(GameState.PlayerView p : players) {
-               ids.add(p.getUserId());
+            // Special handling for STICK payload
+            if (action.getType() == ActionType.STICK) {
+                Map<String, Object> newPayload = action.getPayload();
+                newPayload.put("didStickWork", updatedState.isDidStickWork());
+                action.setPayload(newPayload);
             }
-            List<User> users = userRepository.findAllById(ids);
-            for(User u : users) {
-                if(u.getUsername().equals(updatedState.getWinner().getUser())) {
-                    System.out.println("Adding win to " + u.getUsername());
+
+            // Broadcast action for animations
+            messaging.convertAndSend("/topic/game." + gameId + ".action", action);
+
+            // Broadcast updated state for rendering
+            messaging.convertAndSend("/topic/game." + gameId + ".state", updatedState);
+
+            //Update DB if game is over
+            if (updatedState.getWinners() != null) {
+                List<GameState.PlayerView> players = updatedState.getPlayers();
+                List<Player> winners = updatedState.getWinners();
+                ArrayList<Long> winIds = new ArrayList<Long>();
+                ArrayList<Long> lossIds = new ArrayList<Long>();
+                for (Player p : winners) {
+                    winIds.add(p.getId());
+                }
+                for (GameState.PlayerView p : players) {
+                    long id = p.getUserId();
+                    if (!winIds.contains(id)) {
+                        lossIds.add(id);
+                    }
+                }
+                List<User> winUsers = userRepository.findAllById(winIds);
+                List<User> lossUsers = userRepository.findAllById(lossIds);
+                for (User u : winUsers) {
                     u.setWins(u.getWins() + 1);
+                    userRepository.save(u);
                 }
-                else {
-                    System.out.println("Adding loss to " + u.getUsername());
+                for (User u : lossUsers) {
                     u.setLoses(u.getLoses() + 1);
+                    userRepository.save(u);
                 }
-                userRepository.save(u);
+                Game game = gameRepository.findById(gameId).orElseThrow();
+                game.setStatus("Finished");
+                gameRepository.save(game);
             }
-            Game game = gameRepository.findById(gameId).orElseThrow();
-            game.setStatus("Finished");
-            gameRepository.save(game);
+        }catch(Exception e) {
+            e.printStackTrace();
+            throw e;
         }
     }
 

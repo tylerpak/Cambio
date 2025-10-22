@@ -598,21 +598,23 @@ function winner(state) {
 
     const me = state.players.find(p => p.userId === currentUser.userId);
 
-    if(state.winner && state.winner.id != null) {
+    if(state.winners != null) {
         modal.showModal();
 
-        if (me.userId === state.winner.id) {
+        let ids = [];
+        state.winners.forEach((winner, index) => {
+            ids.push(winner.id);
+        });
+
+        if (ids.includes(me.userId)) {
             result.textContent = "You Win!";
             points.textContent = `Final Score: ${me.score}`;
+            launchConfetti();
         } else {
-            const winningPlayer = state.players.find(p => p.userId === state.winner.id);
-            result.textContent = `${winningPlayer.userName} Wins!`;
-            points.textContent = `Winning Score: ${winningPlayer.score} Your Score: ${me.score}`;
+            result.textContent = "You lost!";
+            points.textContent = `Winning Score: ${state.winners[0].score} Your Score: ${me.score}`;
         }
 
-        if (me.userId === state.winner.id) {
-            launchConfetti();
-        }
     }
 }
 

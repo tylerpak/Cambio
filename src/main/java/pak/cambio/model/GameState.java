@@ -1,9 +1,6 @@
 package pak.cambio.model;
 
-import java.util.Deque;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class GameState {
     private final List<PlayerView> players;
@@ -12,20 +9,20 @@ public class GameState {
     private final boolean cambioCalled;
     private final boolean didStickWork;
     private final int specialMove;
-    private final Player winner;
+    private final ArrayList<Player> winners;
     private final boolean tempTurn;
     private final boolean gameStarted;
     private final Player cambioPlayer;
     private int seq;
 
-    public GameState(List<PlayerView> players, Card prevCard, int currentTurn, boolean cambioCalled, boolean didStickWork, int specialMove, Player winner, boolean tempTurn, boolean gameStarted, Player cambioPlayer, int seq) {
+    public GameState(List<PlayerView> players, Card prevCard, int currentTurn, boolean cambioCalled, boolean didStickWork, int specialMove, ArrayList<Player> winners, boolean tempTurn, boolean gameStarted, Player cambioPlayer, int seq) {
         this.players = players;
         this.prevCard = prevCard;
         this.currentTurn = currentTurn;
         this.cambioCalled = cambioCalled;
         this.didStickWork = didStickWork;
         this.specialMove = specialMove;
-        this.winner = winner;
+        this.winners = winners;
         this.tempTurn = tempTurn;
         this.gameStarted = gameStarted;
         this.cambioPlayer = cambioPlayer;
@@ -56,8 +53,8 @@ public class GameState {
         return specialMove;
     }
 
-    public Player getWinner() {
-        return winner;
+    public ArrayList<Player> getWinners() {
+        return winners;
     }
 
     public boolean isCambioCalled() {
