@@ -196,6 +196,8 @@ document.body.addEventListener("click", (card) => {
                     swapState.originUserId = parseInt(raw[0], 10);
                     swapState.originIndex = parseInt(raw[1], 10);
                     console.log("Origin card is " + swapState.originIndex + " and user Id is " + swapState.originUserId);
+                    card.target.classList.add("border-4",  "border-solid",  "border-red-500")
+                    console.log("Card border debug: ", card.target);
                     return;
                 }
                 if (swapState.destinationIndex === null) {
