@@ -20,6 +20,7 @@ let lastStickPlayer = null;
 let unseenCount = 0;
 let cambioPlayerId = null;
 let chatMode = false;
+let keepInstructions = false;
 
 
 const displayMyTurn = document.getElementById("display-turn");

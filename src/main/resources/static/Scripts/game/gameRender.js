@@ -314,15 +314,14 @@ function renderHands(state) {
     }
 
     //clear special move instructions
-    instructions.innerText = "";
+    if (!keepInstructions) {
+        instructions.innerText = "";
+    }
     if(myTurn === state.currentTurn) {
         if(state.specialMove > 0) {
             hasDrawn = true;
         }
         switch (state.specialMove) {
-            case 0 :
-                instructions.innerText = "";
-                break;
             case 1 :
                 instructions.innerText = "Played a 7 or 8, choose one of your cards to peek"
                 peekMeActive = true;
@@ -332,11 +331,11 @@ function renderHands(state) {
                 peekAnyActive = true;
                 break;
             case 3:
-                instructions.innerText = "Played a Jack or Queen, choose any two cards to swap"
+                instructions.innerText = "Played a Jack or Queen, select card you want to swap"
                 swapModeActive = true;
                 break;
             case 4:
-                instructions.innerText = "Played a King, take a peek at any card and make a swap"
+                instructions.innerText = "Played a King, first select a card to peek"
                 peekPlusActive = true;
                 break;
         }
