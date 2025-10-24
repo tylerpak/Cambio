@@ -198,6 +198,7 @@ document.body.addEventListener("click", (card) => {
                     console.log("Origin card is " + swapState.originIndex + " and user Id is " + swapState.originUserId);
                     card.target.classList.add("border-4",  "border-solid",  "border-red-500")
                     console.log("Card border debug: ", card.target);
+                    instructions.innerText = "choose the second card to swap with"
                     return;
                 }
                 if (swapState.destinationIndex === null) {
@@ -294,9 +295,12 @@ document.body.addEventListener("click", (card) => {
         if (!retry) {
             if (!peekPlusActive) {
                 endTurn();
+                keepInstructions = false;
             } else {
                 endTurn();
                 swapModeActive = true;
+                instructions.innerText = "Choose a card to swap"
+                keepInstructions = true;
             }
         }
         else {
