@@ -33,6 +33,10 @@ public class GameState {
         this.seq = seq;
     }
 
+    public boolean isHasDrawn() {
+        return hasDrawn;
+    }
+
     public boolean isLastCardStuck() {
         return lastCardStuck;
     }
