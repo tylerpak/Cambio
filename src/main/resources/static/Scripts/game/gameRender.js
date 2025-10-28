@@ -198,7 +198,7 @@ function setButtonsEnabled(state) {
                     btn.classList.remove("bg-gray-500", "text-gray-300", "opacity-50", "cursor-not-allowed");
                     btn.classList.add("bg-green-600", "text-white", "hover:bg-green-700");
                 }
-                else if (btn.id === "stick-btn") {
+                else if (btn.id === "stick-btn" && !state.lastCardStuck) {
                     btn.disabled = false;
                     btn.classList.remove("bg-gray-500", "text-gray-300", "opacity-50", "cursor-not-allowed");
                     btn.classList.add("bg-red-600", "text-white", "hover:bg-red-700");
@@ -247,16 +247,31 @@ function setButtonsEnabled(state) {
                     btn.classList.remove("bg-green-600", "text-white", "hover:bg-green-700");
                     btn.classList.add("bg-gray-500", "text-gray-300", "opacity-50", "cursor-not-allowed");
                 }
+                if(btn.id === "stick-btn" && !state.lastCardStuck) {
+                    btn.disabled = false;
+                    btn.classList.remove("bg-gray-500", "text-gray-300", "opacity-50", "cursor-not-allowed");
+                    btn.classList.add("bg-red-600", "text-white", "hover:bg-red-700");
+                }
+                else if(btn.id === "stick-btn" && state.lastCardStuck ) {
+                    btn.disabled = true;
+                    btn.classList.remove("bg-blue-600", "bg-indigo-600", "bg-red-600", "hover:bg-blue-700", "hover:bg-indigo-700", "hover:bg-red-700", "text-white");
+                    btn.classList.add("bg-gray-500", "text-gray-300", "opacity-50", "cursor-not-allowed");
+                }
             }
         } else {
             btn.disabled = true;
             btn.classList.remove("bg-green-600", "bg-blue-600", "bg-indigo-600", "bg-red-600", "hover:bg-green-700", "hover:bg-blue-700", "hover:bg-indigo-700", "hover:bg-red-700", "text-white");
             btn.classList.add("bg-gray-500", "text-gray-300", "opacity-50", "cursor-not-allowed");
-            if(btn.id === "stick-btn" && state.gameStarted) {
+            if(btn.id === "stick-btn" && state.gameStarted && !state.lastCardStuck) {
                 btn.disabled = false;
                 btn.classList.remove("bg-gray-500", "text-gray-300", "opacity-50", "cursor-not-allowed");
                 btn.classList.add("bg-red-600", "text-white", "hover:bg-red-700");
-        }
+            }
+            else if(btn.id === "stick-btn" && state.gameStarted && state.lastCardStuck) {
+                btn.disabled = true;
+                btn.classList.remove("bg-blue-600", "bg-indigo-600", "bg-red-600", "hover:bg-blue-700", "hover:bg-indigo-700", "hover:bg-red-700", "text-white");
+                btn.classList.add("bg-gray-500", "text-gray-300", "opacity-50", "cursor-not-allowed");
+            }
     }
     });
 }
@@ -318,8 +333,8 @@ function renderHands(state) {
         instructions.innerText = "";
     }
     if(myTurn === state.currentTurn) {
+        hasDrawn = state.hasDrawn;
         if(state.specialMove > 0) {
-            hasDrawn = true;
         }
         switch (state.specialMove) {
             case 1 :

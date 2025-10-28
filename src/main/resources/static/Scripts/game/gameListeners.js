@@ -119,7 +119,6 @@ drawBtn.addEventListener("click", () => {
     console.log("Drew a card");
     sendAction(gameId, currentUser.userId, currentUser.username, "DRAW_DECK", {});
     cardPending = true;
-    hasDrawn = true;
 });
 
 playBtn.addEventListener("click", () => {
